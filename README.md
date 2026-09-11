@@ -32,6 +32,23 @@ each agent's instructions file:
 Installing is idempotent, `--dry-run` shows the plan, and `--force` refreshes in place.
 Uninstall removes the marked block and leaves the rest of the file byte-for-byte unchanged.
 
+### Who calls, and who gets called
+
+`--agent` names the **caller**: the agent that will know how to reach for another model. It does
+not limit which models that caller can then run. Any caller you install can drive all three
+wrappers, so installing for Codex alone gives you a Codex that can call Claude and Antigravity,
+and nothing else on the machine changes.
+
+| Command | Result |
+|---|---|
+| `install --global --agent codex` | Codex, in every project, can call Claude and Antigravity. Claude Code does not get the skill |
+| `install --global` | Every agent on this machine can call the others |
+| `install --project . --agent codex` | Codex can call the others, in this project only |
+| `install --project . ` | Every agent can call the others, in this project only |
+
+A wrapper needs its CLI present to run: `./install.sh check` lists which of the three are on
+PATH, and `run-claude.sh` additionally needs the Claude CLI to be logged in.
+
 | Agent | What install does |
 |---|---|
 | Claude Code | Symlinks (or copies, with `--copy`) the skill into `~/.claude/skills/` or `<project>/.claude/skills/`, and mirrors into `~/.agents/skills/` when that shared directory exists |

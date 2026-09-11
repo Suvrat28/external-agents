@@ -32,8 +32,15 @@ while [ $# -gt 0 ]; do
     *) echo "unknown option $1" >&2; exit 2;;
   esac
 done
-[ "$SCOPE" = project ] && [ -z "$PROJECT" ] && PROJECT=$PWD
-[ "$SCOPE" = project ] && PROJECT=$(cd "$PROJECT" && pwd -P)
+if [ "$SCOPE" = project ]; then
+  [ -z "$PROJECT" ] && PROJECT=$PWD
+  if [ ! -d "$PROJECT" ]; then
+    echo "no such directory: $PROJECT" >&2
+    echo "--project takes an existing project; create it first, or use --global for the whole machine." >&2
+    exit 2
+  fi
+  PROJECT=$(cd "$PROJECT" && pwd -P)
+fi
 
 say() { printf '%s\n' "$*"; }
 run() { if [ $DRY -eq 1 ]; then say "  would: $*"; else eval "$@"; fi; }

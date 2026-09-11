@@ -18,3 +18,6 @@ running these CLIs against real work.
 - `integrations/*.manifest.json` — one manifest per agent, so adding an agent is data, not code.
 - `gemini-extension.json`, root `AGENTS.md` — for Antigravity, Codex and any other agent that
   reads an instructions file rather than loading Claude skills.
+- `--agent` selects the caller, not the callee: installing for one agent lets that agent call the
+  other two, and leaves the rest of the machine alone. Documented in the README.
+- `--project` on a path that does not exist says so and exits 2, rather than failing inside `cd`.
