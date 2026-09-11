@@ -1,0 +1,26 @@
+{
+  "agent": "claude",
+  "displayName": "Claude Code",
+  "detect": {
+    "command": "claude"
+  },
+  "native": {
+    "kind": "plugin",
+    "install": [
+      "/plugin marketplace add $EXTERNAL_AGENTS_HOME",
+      "/plugin install external-models@external-agents"
+    ]
+  },
+  "fallback": {
+    "kind": "symlink",
+    "global": {
+      "link": "~/.claude/skills/external-models",
+      "target": "$EXTERNAL_AGENTS_HOME/skills/external-models"
+    },
+    "project": {
+      "link": "<project>/.claude/skills/external-models",
+      "target": "$EXTERNAL_AGENTS_HOME/skills/external-models"
+    }
+  },
+  "entry": "skills/external-models/SKILL.md"
+}

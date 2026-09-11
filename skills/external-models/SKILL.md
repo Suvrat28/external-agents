@@ -113,9 +113,10 @@ git worktree remove --force $OUTDIR/wt-codex && git worktree prune
 
 ## Using this from Codex or Antigravity
 
-The same scripts and templates work unchanged; [AGENTS.md](AGENTS.md) states the procedure for an
-agent that does not load Claude skills. Point any such agent at
-`~/.agents/skills/external-models/AGENTS.md`.
+The same scripts and templates work unchanged. The package root holds an `AGENTS.md` stating the
+procedure for an agent that does not load Claude skills, and `install.sh` writes a pointer to it
+into that agent's instructions file (`~/.codex/AGENTS.md`, `~/.gemini/GEMINI.md`, or a project's
+own). `install.sh check` reports what is installed where.
 
 ## Timings seen
 

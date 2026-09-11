@@ -1,12 +1,17 @@
 # external-models: running another model from this machine
 
 You are an agent with a shell. Three model families are installed here, and you can call any of
-them for a review, a plan gate, a second opinion, or a one-shot question. Use the wrappers: they
-close traps that cost hours when hit directly.
+them for a review, a plan gate, a second opinion, or a one-shot question.
 
-    ~/.agents/skills/external-models/scripts/run-claude.sh   Claude    (opus, sonnet, haiku, fable)
-    ~/.agents/skills/external-models/scripts/run-codex.sh    Codex     (gpt-6-astra)
-    ~/.agents/skills/external-models/scripts/run-agy.sh      Antigravity (gemini-3.8-flash-high and others)
+Set `EM` to the directory holding this file. The pointer in your instructions names it; if you
+are reading this file directly, it is the directory you found it in.
+
+    EM=/path/to/this/package            # the directory containing this AGENTS.md
+    SK=$EM/skills/external-models       # the skill: scripts and templates
+
+    $SK/scripts/run-claude.sh    Claude       (opus, sonnet, haiku, fable)
+    $SK/scripts/run-codex.sh     Codex        (gpt-6-astra)
+    $SK/scripts/run-agy.sh       Antigravity  (gemini-3.8-flash-high and others)
 
 All three take the same shape:
 
@@ -20,18 +25,19 @@ run could edit it. `-t` caps the wall clock in minutes. Each prints the report a
 To review a branch:
 
     S=/tmp/review-$$
-    ~/.agents/skills/external-models/scripts/review-package.sh main HEAD $S --worktree codex
-    # write $S/prompt.md from ~/.agents/skills/external-models/templates/review.md,
-    # filling {{REVIEW_DIR}}=$S, {{SCRATCH_DIR}}=$S/scratch, {{RULES_FILE}}, {{TEST_COMMAND}}
-    ~/.agents/skills/external-models/scripts/run-codex.sh -p $S/prompt.md -o $S/report.md -C $S/wt-codex -e xhigh -t 90
+    $SK/scripts/review-package.sh main HEAD $S --worktree codex
+    # write $S/prompt.md from $SK/templates/review.md, filling {{REVIEW_DIR}}=$S,
+    # {{SCRATCH_DIR}}=$S/scratch, {{RULES_FILE}} and {{TEST_COMMAND}}
+    $SK/scripts/run-codex.sh -p $S/prompt.md -o $S/report.md -C $S/wt-codex -e xhigh -t 90
     git worktree remove --force $S/wt-codex && git worktree prune
 
-Templates: `templates/review.md`, `templates/gate.md`, `templates/implement.md`. Each ends in a
-fixed report format, which is what makes the answers usable.
+Templates: `$SK/templates/review.md`, `gate.md`, `implement.md`. Each ends in a fixed report
+format, which is what makes the answers usable and comparable across models.
 
-`run-claude.sh` needs the `claude` CLI to be logged in on this machine (`claude /login`, once,
-in a terminal) or an `ANTHROPIC_API_KEY` exported; it says so plainly if it is not. `-S
-PROFILE.json` applies a settings profile instead. Codex and Antigravity need no such setup.
+`run-claude.sh` needs the `claude` CLI to be logged in on this machine (`claude /login`, once, in
+a terminal) or an `ANTHROPIC_API_KEY` exported; it says so plainly if it is not. `-S PROFILE.json`
+applies a settings profile instead. Codex and Antigravity need no such setup. `$EM/install.sh check`
+reports what is installed and whether each CLI is available and authenticated.
 
 Rules that matter:
 
@@ -41,4 +47,4 @@ Rules that matter:
 - Verify every finding against the code before acting on it. Antigravity's line numbers are
   often wrong; any tool can be right about a symptom and wrong about the cause.
 - The wrappers refuse to nest more than two deep (`EXTERNAL_MODELS_DEPTH`). Do not defeat it.
-- Full flags, traps and timings: `~/.agents/skills/external-models/reference.md`.
+- Full flags, traps and timings: `$SK/reference.md`.

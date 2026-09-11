@@ -1,0 +1,19 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "external-agents",
+  "description": "Tools for running one coding agent from another.",
+  "owner": {
+    "name": "Suvrat J"
+  },
+  "plugins": [
+    {
+      "name": "external-models",
+      "description": "Run Claude, Codex and Antigravity from one another: adversarial review, plan gates, second opinions, isolated implementation.",
+      "author": {
+        "name": "Suvrat J"
+      },
+      "category": "development",
+      "source": "./"
+    }
+  ]
+}

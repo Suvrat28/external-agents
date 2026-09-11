@@ -1,0 +1,18 @@
+{
+  "agent": "antigravity",
+  "displayName": "Antigravity CLI (agy)",
+  "detect": {
+    "command": "agy"
+  },
+  "native": {
+    "kind": "extension",
+    "manifest": "gemini-extension.json"
+  },
+  "pointer": {
+    "global": "~/.gemini/GEMINI.md",
+    "project": "<project>/GEMINI.md",
+    "heading": "## Running another model",
+    "body": "The procedure, wrapper scripts and prompt templates are at `$EXTERNAL_AGENTS_HOME/AGENTS.md`."
+  },
+  "entry": "AGENTS.md"
+}

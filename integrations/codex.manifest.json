@@ -1,0 +1,17 @@
+{
+  "agent": "codex",
+  "displayName": "Codex CLI",
+  "detect": {
+    "command": "codex"
+  },
+  "native": {
+    "kind": "instructions-pointer"
+  },
+  "pointer": {
+    "global": "~/.codex/AGENTS.md",
+    "project": "<project>/AGENTS.md",
+    "heading": "## Running another model",
+    "body": "The procedure, wrapper scripts and prompt templates are at `$EXTERNAL_AGENTS_HOME/AGENTS.md`. Read that file before invoking `claude` or `agy` by hand: the wrappers close traps (a working tree a reviewer must not share, a plan gate that stops without a report, runaway nesting) that cost hours when hit directly."
+  },
+  "entry": "AGENTS.md"
+}

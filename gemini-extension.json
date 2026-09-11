@@ -1,0 +1,6 @@
+{
+  "name": "external-models",
+  "description": "Run Claude, Codex and Antigravity from one another: adversarial review, plan gates, second opinions.",
+  "version": "0.1.0",
+  "contextFileName": "AGENTS.md"
+}
