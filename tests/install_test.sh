@@ -9,7 +9,7 @@ set -uo pipefail
 
 PKG=$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd -P)
 INSTALL="$PKG/install.sh"
-TMP=$(mktemp -d "${TMPDIR:-/tmp}/external-models-test.XXXXXX")
+TMP=$(mktemp -d "${TMPDIR:-/tmp}/external-agents-test.XXXXXX")
 trap 'rm -rf "$TMP"' EXIT
 PASS=0; FAIL=0
 
@@ -22,10 +22,10 @@ no_()  { if eval "$2" >/dev/null 2>&1; then bad "$1" "expected false: $2"; else 
 em()   { HOME="$TMP/home" "$INSTALL" "$@" >"$TMP/out" 2>"$TMP/err"; echo $?; }
 
 mkdir -p "$TMP/home"
-printf '%s\n' "external-models tests"
+printf '%s\n' "external-agents tests"
 
 printf '\nthe basics\n'
-is "version prints the version"  "$(HOME=$TMP/home "$INSTALL" version | grep -c 'external-models')" "1"
+is "version prints the version"  "$(HOME=$TMP/home "$INSTALL" version | grep -c 'external-agents')" "1"
 is "help prints usage"           "$(HOME=$TMP/home "$INSTALL" help | grep -c 'install.sh setup')" "1"
 is "check exits 0"               "$(em check)" "0"
 is "an unknown command exits 2"  "$(em frobnicate)" "2"
@@ -35,27 +35,27 @@ is "a missing project exits 2"   "$(em install --project $TMP/absent --agent cod
 
 printf '\nglobal install, in a throwaway HOME\n'
 is "install --agent codex exits 0"       "$(em install --global --agent codex)" "0"
-yes_ "it writes the Codex pointer"        "grep -q 'external-models:begin' '$TMP/home/.codex/AGENTS.md'"
-no_  "it leaves Claude alone"             "test -e '$TMP/home/.claude/skills/external-models'"
+yes_ "it writes the Codex pointer"        "grep -q 'external-agents:begin' '$TMP/home/.codex/AGENTS.md'"
+no_  "it leaves Claude alone"             "test -e '$TMP/home/.claude/skills/external-agents'"
 is "a second install is idempotent"      "$(em install --global --agent codex)" "0"
 is "  and says so"                        "$(HOME=$TMP/home "$INSTALL" install --global --agent codex | grep -c 'already present')" "1"
 is "install --agent claude exits 0"      "$(em install --global --agent claude)" "0"
-yes_ "it links the skill"                 "test -L '$TMP/home/.claude/skills/external-models'"
-is "  the link points at the package"     "$(readlink "$TMP/home/.claude/skills/external-models")" "$PKG/skills/external-models"
+yes_ "it links the skill"                 "test -L '$TMP/home/.claude/skills/external-agents'"
+is "  the link points at the package"     "$(readlink "$TMP/home/.claude/skills/external-agents")" "$PKG/skills/external-agents"
 is "uninstall exits 0"                   "$(em uninstall --global)" "0"
-no_  "the skill link is gone"             "test -e '$TMP/home/.claude/skills/external-models'"
-no_  "the Codex block is gone"            "grep -q 'external-models:begin' '$TMP/home/.codex/AGENTS.md'"
+no_  "the skill link is gone"             "test -e '$TMP/home/.claude/skills/external-agents'"
+no_  "the Codex block is gone"            "grep -q 'external-agents:begin' '$TMP/home/.codex/AGENTS.md'"
 
 printf '\nproject install leaves the file byte-for-byte\n'
 PROJ="$TMP/proj"; mkdir -p "$PROJ"
 printf '# My project\n\nSome instructions.\n' > "$PROJ/AGENTS.md"
 cp "$PROJ/AGENTS.md" "$TMP/AGENTS.before"
 is "install --project exits 0"           "$(em install --project $PROJ --agent codex,claude)" "0"
-yes_ "the block is added"                 "grep -q 'external-models:begin' '$PROJ/AGENTS.md'"
-yes_ "the skill lands in the project"     "test -e '$PROJ/.claude/skills/external-models'"
+yes_ "the block is added"                 "grep -q 'external-agents:begin' '$PROJ/AGENTS.md'"
+yes_ "the skill lands in the project"     "test -e '$PROJ/.claude/skills/external-agents'"
 is "uninstall --project exits 0"         "$(em uninstall --project $PROJ --agent codex,claude)" "0"
 yes_ "AGENTS.md is restored exactly"      "diff -q '$TMP/AGENTS.before' '$PROJ/AGENTS.md'"
-no_  "the project skill is gone"          "test -e '$PROJ/.claude/skills/external-models'"
+no_  "the project skill is gone"          "test -e '$PROJ/.claude/skills/external-agents'"
 
 printf '\ndry run changes nothing\n'
 PROJ2="$TMP/proj2"; mkdir -p "$PROJ2"
@@ -65,8 +65,8 @@ no_  "no AGENTS.md was created"           "test -e '$PROJ2/AGENTS.md'"
 printf '\n--copy vendors the skill in\n'
 PROJ3="$TMP/proj3"; mkdir -p "$PROJ3"
 is "install --copy exits 0"              "$(em install --project $PROJ3 --agent claude --copy)" "0"
-yes_ "it is a real directory, not a link" "test -d '$PROJ3/.claude/skills/external-models' && ! test -L '$PROJ3/.claude/skills/external-models'"
-yes_ "the scripts came with it"           "test -x '$PROJ3/.claude/skills/external-models/scripts/run-codex.sh'"
+yes_ "it is a real directory, not a link" "test -d '$PROJ3/.claude/skills/external-agents' && ! test -L '$PROJ3/.claude/skills/external-agents'"
+yes_ "the scripts came with it"           "test -x '$PROJ3/.claude/skills/external-agents/scripts/run-codex.sh'"
 
 printf '\nsetup without any agent installed\n'
 OUT=$(HOME="$TMP/home" PATH=/usr/bin:/bin "$INSTALL" setup --dry-run 2>&1); CODE=$?

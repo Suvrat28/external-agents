@@ -17,9 +17,9 @@ done
 [ -f "$PROMPT" ] || { echo "no prompt file at $PROMPT" >&2; exit 2; }
 CODEX=$(command -v codex || echo "$HOME/.local/bin/codex")
 # Nesting guard: agents calling agents calling agents burns budget invisibly.
-DEPTH=${EXTERNAL_MODELS_DEPTH:-0}
-[ "$DEPTH" -ge 2 ] && { echo "refusing: external-models nesting depth $DEPTH; break the loop" >&2; exit 3; }
-export EXTERNAL_MODELS_DEPTH=$((DEPTH + 1))
+DEPTH=${EXTERNAL_AGENTS_DEPTH:-0}
+[ "$DEPTH" -ge 2 ] && { echo "refusing: external-agents nesting depth $DEPTH; break the loop" >&2; exit 3; }
+export EXTERNAL_AGENTS_DEPTH=$((DEPTH + 1))
 # A sandbox that can write must not run in a main checkout by accident.
 if [ "$SANDBOX" != "read-only" ] && git -C "$DIR" rev-parse --git-dir >/dev/null 2>&1; then
   GD=$(cd "$(git -C "$DIR" rev-parse --git-dir)" && pwd -P); GC=$(cd "$(git -C "$DIR" rev-parse --git-common-dir)" && pwd -P)

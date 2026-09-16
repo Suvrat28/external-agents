@@ -8,19 +8,19 @@
     "kind": "plugin",
     "install": [
       "/plugin marketplace add $EXTERNAL_AGENTS_HOME",
-      "/plugin install external-models@external-agents"
+      "/plugin install external-agents@external-agents"
     ]
   },
   "fallback": {
     "kind": "symlink",
     "global": {
-      "link": "~/.claude/skills/external-models",
-      "target": "$EXTERNAL_AGENTS_HOME/skills/external-models"
+      "link": "~/.claude/skills/external-agents",
+      "target": "$EXTERNAL_AGENTS_HOME/skills/external-agents"
     },
     "project": {
-      "link": "<project>/.claude/skills/external-models",
-      "target": "$EXTERNAL_AGENTS_HOME/skills/external-models"
+      "link": "<project>/.claude/skills/external-agents",
+      "target": "$EXTERNAL_AGENTS_HOME/skills/external-agents"
     }
   },
-  "entry": "skills/external-models/SKILL.md"
+  "entry": "skills/external-agents/SKILL.md"
 }

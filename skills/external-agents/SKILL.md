@@ -1,5 +1,5 @@
 ---
-name: external-models
+name: external-agents
 description: "Use when work would benefit from a second model — an adversarial review of a branch or diff, a plan gate, an independent opinion, implementing a task in isolation, or any one-shot prompt. Runs Claude (claude), Codex (gpt-6-astra) and Antigravity (gemini and others) from one another through wrapper scripts that close the traps. Without them Codex hangs on stdin, Antigravity stops at a plan gate, and a reviewer edits your working tree."
 ---
 
@@ -16,7 +16,7 @@ work finds what the author cannot see; three independent readings of the same br
 | Codex | `codex` | `gpt-6-astra` | `low` `medium` `high` `xhigh` (never `max`) | Adversarial probes against real code and data; exact numbers; reliable `file:line` |
 | Antigravity | `agy` | `gemini-3.8-flash-high` and others (`agy models`) | in the model name for Gemini; `--effort` for the rest | Fast second opinions; implementing a task from a written plan |
 
-**Announce at start:** "Using external-models to run <tool> for <purpose>."
+**Announce at start:** "Using external-agents to run <tool> for <purpose>."
 
 [reference.md](reference.md) has each CLI's flags, its traps, and what it did on real work.
 
@@ -34,7 +34,7 @@ work finds what the author cannot see; three independent readings of the same br
    PROFILE.json`. See [reference.md](reference.md#claude) before relying on it.
 5. **A reviewer must not share your working tree.** Every wrapper refuses to run in a
    repository's main checkout when it could edit. Give each tool a detached copy.
-6. **Agents calling agents.** Each wrapper carries `EXTERNAL_MODELS_DEPTH` and refuses past two
+6. **Agents calling agents.** Each wrapper carries `EXTERNAL_AGENTS_DEPTH` and refuses past two
    levels, so a loop cannot run up a bill in the background.
 
 ## Procedure

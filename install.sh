@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# external-models: set up, install, verify and remove the skill that lets your coding agents
+# external-agents: set up, install, verify and remove the skill that lets your coding agents
 # call one another.
 #
 #   ./install.sh setup     [--global | --project DIR] [--yes]
@@ -18,8 +18,8 @@
 set -euo pipefail
 
 HOME_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)
-SKILL_SRC="$HOME_DIR/skills/external-models"
-NAME=external-models
+SKILL_SRC="$HOME_DIR/skills/external-agents"
+NAME=external-agents
 BEGIN="<!-- $NAME:begin (managed by install.sh; edit the package, not this block) -->"
 END="<!-- $NAME:end -->"
 VERSION=$(sed -n 's/.*"version"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p' "$HOME_DIR/.claude-plugin/plugin.json" | head -1)
@@ -306,7 +306,7 @@ setup_agent() {
 # ---------------------------------------------------------------- commands -------------------
 case "$CMD" in
   setup)
-    say "external-models $VERSION"
+    say "external-agents $VERSION"
     say "Setting up for: $([ "$SCOPE" = global ] && echo "this machine" || echo "$PROJECT")"
     interactive || say "(not a terminal: questions take their default answer and nothing is installed for you)"
     usable=""
@@ -335,20 +335,20 @@ case "$CMD" in
       warn "run './install.sh setup' to be walked through installing one, or pass --agent explicitly."
       exit 1
     fi
-    say "external-models $VERSION -> $SCOPE${PROJECT:+ ($PROJECT)}   agents:$(for id in $AGENTS; do printf ' %s' "$id"; done)"
+    say "external-agents $VERSION -> $SCOPE${PROJECT:+ ($PROJECT)}   agents:$(for id in $AGENTS; do printf ' %s' "$id"; done)"
     for id in $AGENTS; do do_install_one "$id"; done
     say 'done. Run "./install.sh check" to verify it.'
     ;;
 
   uninstall)
     [ -z "$AGENTS" ] && AGENTS=$ALL_AGENTS || AGENTS=$(normalise_agents "$AGENTS")
-    say "removing external-models from $SCOPE${PROJECT:+ ($PROJECT)}   agents:$(for id in $AGENTS; do printf ' %s' "$id"; done)"
+    say "removing external-agents from $SCOPE${PROJECT:+ ($PROJECT)}   agents:$(for id in $AGENTS; do printf ' %s' "$id"; done)"
     for id in $AGENTS; do do_uninstall_one "$id"; done
     say "done."
     ;;
 
   check)
-    say "external-models $VERSION"
+    say "external-agents $VERSION"
     say "package:  $HOME_DIR"
     say ""
     say "Agents on this machine"
@@ -390,7 +390,7 @@ case "$CMD" in
     done
     ;;
 
-  version) say "external-models $VERSION ($HOME_DIR)";;
+  version) say "external-agents $VERSION ($HOME_DIR)";;
   help|"") awk 'NR>1 && /^#/ {sub(/^# ?/,""); print; next} NR>1 {exit}' "$0";;
   *) warn "unknown command: $CMD"; warn "try one of: setup, install, check, uninstall, version, help"; exit 2;;
 esac

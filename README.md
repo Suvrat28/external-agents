@@ -1,4 +1,4 @@
-# external-models
+# external-agents
 
 **Let your coding assistants ask each other for a second opinion.**
 
@@ -140,7 +140,7 @@ This repository is also a Claude Code plugin marketplace, if you prefer that to 
 
 ```
 /plugin marketplace add /path/to/this/folder
-/plugin install external-models@external-agents
+/plugin install external-agents@external-agents
 ```
 
 ### What gets changed on your computer
@@ -151,16 +151,16 @@ This repository is also a Claude Code plugin marketplace, if you prefer that to 
 | Codex | A marked block in `~/.codex/AGENTS.md` (or the project's `AGENTS.md`) |
 | Antigravity | The same block in `~/.gemini/GEMINI.md` (or the project's `GEMINI.md`) |
 
-Every block is wrapped in `external-models:begin` / `end` markers, which is how uninstall removes
+Every block is wrapped in `external-agents:begin` / `end` markers, which is how uninstall removes
 exactly its own text and nothing else.
 
 ### Using the scripts directly
 
 ```bash
-skills/external-models/scripts/run-codex.sh  -p PROMPT_FILE -o REPORT_FILE -C WORKTREE -e xhigh -t 90
-skills/external-models/scripts/run-agy.sh    -p PROMPT_FILE -o REPORT_FILE -C WORKTREE -m gemini-3.8-flash-high
-skills/external-models/scripts/run-claude.sh -p PROMPT_FILE -o REPORT_FILE -C WORKTREE -m opus
-skills/external-models/scripts/review-package.sh BASE HEAD OUTDIR --worktree codex
+skills/external-agents/scripts/run-codex.sh  -p PROMPT_FILE -o REPORT_FILE -C WORKTREE -e xhigh -t 90
+skills/external-agents/scripts/run-agy.sh    -p PROMPT_FILE -o REPORT_FILE -C WORKTREE -m gemini-3.8-flash-high
+skills/external-agents/scripts/run-claude.sh -p PROMPT_FILE -o REPORT_FILE -C WORKTREE -m opus
+skills/external-agents/scripts/review-package.sh BASE HEAD OUTDIR --worktree codex
 ```
 
 `-C` is the working directory, and it should be a throwaway copy of your project rather than the
@@ -173,10 +173,10 @@ run may take, in minutes. Each script prints its report and saves it to `-o`.
 |---|---|
 | `install.sh` | Setup, installation, checking, removal |
 | `tests/install_test.sh` | 31 tests, run against a throwaway home directory |
-| `skills/external-models/SKILL.md` | The procedure, as a Claude Code skill |
-| `skills/external-models/reference.md` | Each tool's flags, traps, sign-in, and timings from real runs |
-| `skills/external-models/scripts/` | The four scripts above |
-| `skills/external-models/templates/` | Prompt templates: review, plan gate, implementation |
+| `skills/external-agents/SKILL.md` | The procedure, as a Claude Code skill |
+| `skills/external-agents/reference.md` | Each tool's flags, traps, sign-in, and timings from real runs |
+| `skills/external-agents/scripts/` | The four scripts above |
+| `skills/external-agents/templates/` | Prompt templates: review, plan gate, implementation |
 | `AGENTS.md` | The same procedure for assistants that do not read Claude skills |
 | `integrations/*.manifest.json` | One file per assistant, so adding another is data, not code |
 | `.claude-plugin/` | Plugin and marketplace manifests for Claude Code |
@@ -191,7 +191,7 @@ run may take, in minutes. Each script prints its report and saves it to `-o`.
 5. A reviewer must never work in your live folder. Every script refuses to.
 6. Assistants calling assistants can loop. They refuse to nest more than two deep.
 
-`skills/external-models/reference.md` has the detail.
+`skills/external-agents/reference.md` has the detail.
 
 ### A few words explained
 

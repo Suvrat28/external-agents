@@ -7,7 +7,7 @@
   },
   "plugins": [
     {
-      "name": "external-models",
+      "name": "external-agents",
       "description": "Run Claude, Codex and Antigravity from one another: adversarial review, plan gates, second opinions, isolated implementation.",
       "author": {
         "name": "Suvrat J"

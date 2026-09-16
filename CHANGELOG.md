@@ -31,7 +31,7 @@ manual.
 First packaged release. The scripts and procedure were written on 2026-09-08 from four days of
 running these CLIs against real work.
 
-- `skills/external-models/` — the skill: `SKILL.md`, `reference.md`, four wrapper scripts, three
+- `skills/external-agents/` — the skill: `SKILL.md`, `reference.md`, four wrapper scripts, three
   prompt templates.
 - Claude Code plugin format: `.claude-plugin/plugin.json`, and `.claude-plugin/marketplace.json`
   so the repository is its own marketplace.

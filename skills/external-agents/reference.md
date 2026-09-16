@@ -106,7 +106,7 @@ claude -p "PROMPT" [--model opus|sonnet|haiku|fable|<full name>]
 
 ## Cross-calling
 
-Every wrapper exports `EXTERNAL_MODELS_DEPTH` and refuses at 2, so Claude can call Codex which
+Every wrapper exports `EXTERNAL_AGENTS_DEPTH` and refuses at 2, so Claude can call Codex which
 can call Claude, and no further. Each also refuses a repository's main checkout whenever the run
 could edit it; give a detached worktree. Neither guard has a quiet override: `--allow-main`
 (Claude) is explicit, and depth cannot be overridden at all.

@@ -1,5 +1,5 @@
 {
-  "name": "external-models",
+  "name": "external-agents",
   "description": "Run Claude, Codex and Antigravity from one another: adversarial review of a branch or diff, plan gates, second opinions, and task implementation in an isolated worktree.",
   "version": "0.2.0",
   "author": {

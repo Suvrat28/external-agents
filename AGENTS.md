@@ -1,4 +1,4 @@
-# external-models: running another model from this machine
+# external-agents: running another model from this machine
 
 You are an agent with a shell. Three model families are installed here, and you can call any of
 them for a review, a plan gate, a second opinion, or a one-shot question.
@@ -7,7 +7,7 @@ Set `EM` to the directory holding this file. The pointer in your instructions na
 are reading this file directly, it is the directory you found it in.
 
     EM=/path/to/this/package            # the directory containing this AGENTS.md
-    SK=$EM/skills/external-models       # the skill: scripts and templates
+    SK=$EM/skills/external-agents       # the skill: scripts and templates
 
     $SK/scripts/run-claude.sh    Claude       (opus, sonnet, haiku, fable)
     $SK/scripts/run-codex.sh     Codex        (gpt-6-astra)
@@ -46,5 +46,5 @@ Rules that matter:
   network, any edit or commit.
 - Verify every finding against the code before acting on it. Antigravity's line numbers are
   often wrong; any tool can be right about a symptom and wrong about the cause.
-- The wrappers refuse to nest more than two deep (`EXTERNAL_MODELS_DEPTH`). Do not defeat it.
+- The wrappers refuse to nest more than two deep (`EXTERNAL_AGENTS_DEPTH`). Do not defeat it.
 - Full flags, traps and timings: `$SK/reference.md`.

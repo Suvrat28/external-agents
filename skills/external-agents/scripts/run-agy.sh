@@ -19,9 +19,9 @@ done
 [ -f "$PROMPT" ] || { echo "no prompt file at $PROMPT" >&2; exit 2; }
 AGY=$(command -v agy || echo "$HOME/.local/bin/agy")
 # Nesting guard: agents calling agents calling agents burns budget invisibly.
-DEPTH=${EXTERNAL_MODELS_DEPTH:-0}
-[ "$DEPTH" -ge 2 ] && { echo "refusing: external-models nesting depth $DEPTH; break the loop" >&2; exit 3; }
-export EXTERNAL_MODELS_DEPTH=$((DEPTH + 1))
+DEPTH=${EXTERNAL_AGENTS_DEPTH:-0}
+[ "$DEPTH" -ge 2 ] && { echo "refusing: external-agents nesting depth $DEPTH; break the loop" >&2; exit 3; }
+export EXTERNAL_AGENTS_DEPTH=$((DEPTH + 1))
 # It runs with permissions skipped and can edit, so never in a main checkout by accident.
 if [ "$MODE" != "plan" ] && git -C "$DIR" rev-parse --git-dir >/dev/null 2>&1; then
   GD=$(cd "$(git -C "$DIR" rev-parse --git-dir)" && pwd -P); GC=$(cd "$(git -C "$DIR" rev-parse --git-common-dir)" && pwd -P)
