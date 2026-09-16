@@ -181,10 +181,6 @@ run may take, in minutes. Each script prints its report and saves it to `-o`.
 | `integrations/*.manifest.json` | One file per assistant, so adding another is data, not code |
 | `.claude-plugin/` | Plugin and marketplace manifests for Claude Code |
 
-Borrowed from [GitHub Spec Kit](https://github.com/github/spec-kit): a `check` command that
-verifies your tooling before you rely on it, manifest-driven integrations, and one installer that
-targets either a project or the whole machine.
-
 ### Things that would otherwise waste your afternoon
 
 1. `codex exec` waits forever if its input is left open. One run hung for seventeen hours.
