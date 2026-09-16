@@ -41,7 +41,7 @@ perl -e 'alarm shift; exec @ARGV' -- $((MINUTES * 60)) "$AGY" --model "$MODEL" $
   --dangerously-skip-permissions --print-timeout "${MINUTES}m" --output-format text \
   --print="$(cat "$PROMPT")" < /dev/null > "$STDOUT" 2> "$STDERR"
 CODE=$?
-if [ ! -s "$REPORT" ] && [ $PROCEED -eq 1 ] && grep -qi "proceed" "$STDOUT"; then
+if [ "$MODE" = "plan" ] && [ ! -s "$REPORT" ] && [ $PROCEED -eq 1 ] && grep -qi "proceed" "$STDOUT"; then
   echo "stopped at a plan gate; continuing the conversation for the report"
   LEFT=$(( MINUTES * 60 - ( $(date +%s) - START ) )); [ $LEFT -lt 300 ] && LEFT=300
   perl -e 'alarm shift; exec @ARGV' -- $LEFT "$AGY" --continue --model "$MODEL" ${EFFORTFLAG[@]+"${EFFORTFLAG[@]}"} ${MODEFLAG[@]+"${MODEFLAG[@]}"} \

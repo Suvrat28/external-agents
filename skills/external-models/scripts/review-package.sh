@@ -19,7 +19,7 @@ git log --oneline "$BASE..$HEAD" > "$OUT/commits.txt"
 git diff --stat "$BASE..$HEAD" > "$OUT/diffstat.txt"
 git diff -U8 "$BASE..$HEAD" -- . ${EXCLUDES[@]+"${EXCLUDES[@]}"} > "$OUT/diff.patch"
 for NAME in ${NAMES[@]+"${NAMES[@]}"}; do
-  git worktree add --detach "$OUT/wt-$NAME" "$HEAD" >/dev/null 2>&1
+  git worktree add --detach "$OUT/wt-$NAME" "$HEAD" >/dev/null
 done
 echo "package: $(wc -l < "$OUT/commits.txt") commits, $(wc -l < "$OUT/diff.patch") patch lines -> $OUT"
 if [ ${#NAMES[@]} -gt 0 ]; then echo "worktrees: $(printf '%s ' "${NAMES[@]/#/$OUT/wt-}")"; fi
